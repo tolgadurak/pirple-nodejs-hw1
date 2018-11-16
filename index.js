@@ -51,7 +51,11 @@ let doApiAction = (request, response) => {
     /* Close buffer */
     buffer += decoder.end();
     /* Parse buffer as JSON */
-    buffer = JSON.parse(buffer);
+    try {
+        buffer = JSON.parse(buffer);
+    } catch(e) {
+        buffer = { "errorMessage" : "Invalid JSON format" };
+    }
     /* Choose appropriate handler with respect to path */
     const handler = router.choose(path);
 
